@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Mentes do Silício — Sistema interativo de cartas colecionáveis das figuras históricas da computação." />
+  <title>Mentes do Silício</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+</head>
+<body>
+  <header class="navbar" role="banner">
+    <div class="navbar__brand">
+      <span class="navbar__logo" aria-hidden="true">⚡</span>
+      <span class="navbar__title">Mentes do Silício</span>
+    </div>
+    <div class="navbar__recruits" id="navbar-recruits" aria-live="polite">
+      Pioneiros Recrutados: <strong id="recruits-count">0</strong>/7
+    </div>
+    <nav class="navbar__nav" id="main-nav" role="navigation" aria-label="Navegação principal">
+      <ul class="navbar__list">
+        <li><button class="nav-btn active" data-tab="pioneers" aria-current="page">Início</button></li>
+        <li><button class="nav-btn"        data-tab="pioneers"               >Pioneiros</button></li>
+        <li><button class="nav-btn"        data-tab="team"                   >Minha Equipe</button></li>
+        <li><button class="nav-btn"        data-tab="favorites"              >Favoritos</button></li>
+        <li><button class="nav-btn"        data-tab="duel"                   >Modo Duelo</button></li>
+        <li><button class="nav-btn"        data-tab="dashboard"              >Painel</button></li>
+      </ul>
+    </nav>
+    <button class="navbar__hamburger" id="hamburger-btn" aria-label="Abrir menu" aria-expanded="false" aria-controls="main-nav">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </header>
+
+  <main class="main-content" id="main-content" role="main">
+
+    <!-- PIONEIROS / COLEÇÃO DE CARTAS (PÁGINA INICIAL) -->
+    <section class="tab-section" id="tab-pioneers" data-section="pioneers">
+      <!-- Banner Hero com identidade visual e contadores rápidos -->
+      <div class="collection-hero">
+        <h1 class="collection-hero__title">Mentes do <span class="text-accent">Silício</span></h1>
+        <p class="collection-hero__subtitle">Colecione, recrute e duela com as maiores figuras históricas que moldaram a computação moderna.</p>
+        <div class="hero__stats" id="hero-stats"></div>
+      </div>
+
+      <div class="section-header">
+        <h2 class="section-title">Coleção de Pioneiros</h2>
+        <button class="btn btn--primary btn--sm" id="add-pioneer-btn" aria-haspopup="dialog">➕ Adicionar Pioneiro</button>
+      </div>
+      <div class="filters-bar" role="search" aria-label="Filtros da coleção">
+        <div class="filters-bar__search">
+          <label for="search-input" class="sr-only">Buscar pioneiro</label>
+          <input type="search" id="search-input" class="input input--search" placeholder="🔍 Buscar por nome ou especialidade..." autocomplete="off" aria-label="Buscar por nome ou especialidade" />
+        </div>
+        <div class="filters-bar__dropdowns">
+          <label for="filter-rarity" class="sr-only">Filtrar por raridade</label>
+          <select id="filter-rarity" class="select" aria-label="Filtrar por raridade">
+            <option value="">Todas as raridades</option>
+            <option value="Comum">Comum</option>
+            <option value="Raro">Raro</option>
+            <option value="Épico">Épico</option>
+          </select>
+          <label for="filter-personality" class="sr-only">Filtrar por personalidade</label>
+          <select id="filter-personality" class="select" aria-label="Filtrar por personalidade">
+            <option value="">Todas as personalidades</option>
+          </select>
+          <label for="filter-specialty" class="sr-only">Filtrar por especialidade</label>
+          <select id="filter-specialty" class="select" aria-label="Filtrar por especialidade">
+            <option value="">Todas as especialidades</option>
+          </select>
+          <button class="btn btn--ghost btn--sm" id="clear-filters-btn">✕ Limpar</button>
+        </div>
+      </div>
+      <div class="cards-grid" id="pioneers-grid" role="list" aria-label="Lista de pioneiros"></div>
+      <div class="empty-state hidden" id="pioneers-empty">
+        <p class="empty-state__icon">🔭</p>
+        <p class="empty-state__text">Nenhum pioneiro encontrado para esses filtros.</p>
+        <button class="btn btn--ghost btn--sm" id="clear-filters-empty-btn">Limpar filtros</button>
+      </div>
+    </section>
+
+    <!-- MINHA EQUIPE -->
+    <section class="tab-section hidden" id="tab-team" data-section="team">
+      <div class="section-header">
+        <h2 class="section-title">Minha Equipe</h2>
+        <span class="badge" id="team-count-badge">0 recrutados</span>
+      </div>
+      <div class="cards-grid" id="team-grid" role="list" aria-label="Equipe recrutada"></div>
+      <div class="empty-state hidden" id="team-empty">
+        <p class="empty-state__icon">👥</p>
+        <p class="empty-state__text">Sua equipe está vazia. Vá à coleção e recrute pioneiros!</p>
+        <button class="btn btn--primary" data-tab-link="pioneers">Ver Coleção</button>
+      </div>
+    </section>
+
+    <!-- FAVORITOS -->
+    <section class="tab-section hidden" id="tab-favorites" data-section="favorites">
+      <div class="section-header">
+        <h2 class="section-title">Favoritos</h2>
+        <span class="badge" id="fav-count-badge">0 favoritados</span>
+      </div>
+      <div class="cards-grid" id="favorites-grid" role="list" aria-label="Pioneiros favoritos"></div>
+      <div class="empty-state hidden" id="favorites-empty">
+        <p class="empty-state__icon">⭐</p>
+        <p class="empty-state__text">Você ainda não favoritou nenhum pioneiro.</p>
+        <button class="btn btn--primary" data-tab-link="pioneers">Ver Coleção</button>
+      </div>
+    </section>
+
+    <!-- MODO DUELO -->
+    <section class="tab-section hidden" id="tab-duel" data-section="duel">
+      <div class="section-header">
+        <h2 class="section-title">⚔️ Modo Duelo</h2>
+        <p class="section-subtitle">Selecione dois pioneiros e escolha um atributo para disputar!</p>
+      </div>
+      <div class="duel-arena" id="duel-arena">
+        <div class="duel-slot" id="duel-slot-a">
+          <h3 class="duel-slot__title">Pioneiro A</h3>
+          <label for="duel-select-a" class="sr-only">Selecionar Pioneiro A</label>
+          <select id="duel-select-a" class="select select--duel">
+            <option value="">— Escolha um pioneiro —</option>
+          </select>
+          <div class="duel-card-preview" id="duel-preview-a"></div>
+        </div>
+        <div class="duel-vs" aria-hidden="true">VS</div>
+        <div class="duel-slot" id="duel-slot-b">
+          <h3 class="duel-slot__title">Pioneiro B</h3>
+          <label for="duel-select-b" class="sr-only">Selecionar Pioneiro B</label>
+          <select id="duel-select-b" class="select select--duel">
+            <option value="">— Escolha um pioneiro —</option>
+          </select>
+          <div class="duel-card-preview" id="duel-preview-b"></div>
+        </div>
+      </div>
+      <div class="duel-attribute-select hidden" id="duel-attr-section">
+        <p class="duel-attribute-select__label">Escolha o atributo para o duelo:</p>
+        <div class="duel-attribute-select__buttons">
+          <button class="btn btn--attr" data-attr="impactoHistorico">🏆 Impacto Histórico</button>
+          <button class="btn btn--attr" data-attr="poderInovacao">💡 Poder de Inovação</button>
+          <button class="btn btn--attr" data-attr="resiliencia">🛡️ Resiliência</button>
+        </div>
+      </div>
+      <div class="duel-result hidden" id="duel-result" role="alert" aria-live="assertive"></div>
+    </section>
+
+    <!-- PAINEL -->
+    <section class="tab-section hidden" id="tab-dashboard" data-section="dashboard">
+      <div class="section-header">
+        <h2 class="section-title">📊 Painel do Abrigo</h2>
+      </div>
+      <div class="dashboard-stats" id="dashboard-stats"></div>
+      <div class="dashboard-specialty" id="dashboard-specialty">
+        <h3 class="dashboard-subtitle">Distribuição por Especialidade</h3>
+        <div class="specialty-list" id="specialty-list"></div>
+      </div>
+      <div class="dashboard-rarity" id="dashboard-rarity">
+        <h3 class="dashboard-subtitle">Distribuição por Raridade</h3>
+        <div class="rarity-bars" id="rarity-bars"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL DETALHES -->
+  <dialog class="modal" id="modal-details" aria-labelledby="modal-details-title">
+    <div class="modal__content">
+      <button class="modal__close" id="close-details-modal" aria-label="Fechar modal">✕</button>
+      <div id="modal-details-body"></div>
+    </div>
+  </dialog>
+
+  <!-- MODAL FORMULÁRIO -->
+  <dialog class="modal" id="modal-form" aria-labelledby="modal-form-title">
+    <div class="modal__content modal__content--form">
+      <button class="modal__close" id="close-form-modal" aria-label="Fechar formulário">✕</button>
+      <h2 class="modal__title" id="modal-form-title">Adicionar Pioneiro</h2>
+      <form id="pioneer-form" class="form" novalidate>
+        <input type="hidden" id="form-id" />
+        <div class="form__row">
+          <div class="form__group">
+            <label class="form__label" for="form-nome">Nome <span class="required" aria-hidden="true">*</span></label>
+            <input class="input" type="text" id="form-nome" name="nome" placeholder="Ex: Ada Lovelace" required maxlength="80" />
+            <span class="form__error" id="error-nome" role="alert"></span>
+          </div>
+          <div class="form__group">
+            <label class="form__label" for="form-especialidade">Especialidade <span class="required" aria-hidden="true">*</span></label>
+            <input class="input" type="text" id="form-especialidade" name="especialidade" placeholder="Ex: Linguagens de Programação" required maxlength="80" />
+            <span class="form__error" id="error-especialidade" role="alert"></span>
+          </div>
+        </div>
+        <div class="form__row">
+          <div class="form__group">
+            <label class="form__label" for="form-personalidade">Personalidade <span class="required" aria-hidden="true">*</span></label>
+            <input class="input" type="text" id="form-personalidade" name="personalidade" placeholder="Ex: Visionária" required maxlength="60" />
+            <span class="form__error" id="error-personalidade" role="alert"></span>
+          </div>
+          <div class="form__group">
+            <label class="form__label" for="form-raridade">Raridade <span class="required" aria-hidden="true">*</span></label>
+            <select class="select" id="form-raridade" name="raridade" required>
+              <option value="">Selecione...</option>
+              <option value="Comum">Comum</option>
+              <option value="Raro">Raro</option>
+              <option value="Épico">Épico</option>
+            </select>
+            <span class="form__error" id="error-raridade" role="alert"></span>
+          </div>
+        </div>
+        <div class="form__row">
+          <div class="form__group">
+            <label class="form__label" for="form-energia">Energia: <span id="energia-display">50</span></label>
+            <input class="input input--range" type="range" id="form-energia" name="energia" min="0" max="100" value="50" required />
+          </div>
+          <div class="form__group">
+            <label class="form__label" for="form-imagem">Caminho da Imagem</label>
+            <input class="input" type="text" id="form-imagem" name="imagem" placeholder="assets/pioneiros/nome.webp" />
+          </div>
+        </div>
+        <div class="form__group">
+          <label class="form__label" for="form-biografia">Biografia <span class="required" aria-hidden="true">*</span></label>
+          <textarea class="input input--textarea" id="form-biografia" name="biografia" placeholder="Descreva os feitos..." required maxlength="400" rows="3"></textarea>
+          <span class="form__error" id="error-biografia" role="alert"></span>
+        </div>
+        <fieldset class="form__fieldset">
+          <legend class="form__legend">Atributos de Duelo (0–100)</legend>
+          <div class="form__row">
+            <div class="form__group">
+              <label class="form__label" for="form-impacto">Impacto Histórico <span class="required" aria-hidden="true">*</span></label>
+              <input class="input" type="number" id="form-impacto" name="impactoHistorico" min="0" max="100" placeholder="0–100" required />
+              <span class="form__error" id="error-impacto" role="alert"></span>
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="form-inovacao">Poder de Inovação <span class="required" aria-hidden="true">*</span></label>
+              <input class="input" type="number" id="form-inovacao" name="poderInovacao" min="0" max="100" placeholder="0–100" required />
+              <span class="form__error" id="error-inovacao" role="alert"></span>
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="form-resiliencia">Resiliência <span class="required" aria-hidden="true">*</span></label>
+              <input class="input" type="number" id="form-resiliencia" name="resiliencia" min="0" max="100" placeholder="0–100" required />
+              <span class="form__error" id="error-resiliencia" role="alert"></span>
+            </div>
+          </div>
+        </fieldset>
+        <div class="form__actions">
+          <button type="button" class="btn btn--ghost" id="cancel-form-btn">Cancelar</button>
+          <button type="submit" class="btn btn--primary" id="submit-form-btn">Salvar Pioneiro</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

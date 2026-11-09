@@ -1,0 +1,1359 @@
+/* ================================================================
+   layout.css — Mentes do Silício
+   Grid, Navbar, Cards, Modais e componentes de layout
+   ================================================================ */
+
+/* ── 1. NAVBAR ───────────────────────────────────────────────── */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: 0 var(--space-8);
+  height: var(--navbar-height);
+  background: rgba(10, 11, 15, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+  margin-right: var(--space-4);
+}
+
+.navbar__logo {
+  font-size: 1.5rem;
+  filter: drop-shadow(0 0 8px var(--color-accent-blue));
+}
+
+.navbar__title {
+  font-size: var(--font-size-lg);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--color-accent-blue), var(--color-accent-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  white-space: nowrap;
+}
+
+.navbar__recruits {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-bg-700);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.navbar__recruits strong {
+  color: var(--color-accent-gold);
+  font-weight: 700;
+}
+
+.navbar__nav {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.navbar__list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.nav-btn {
+  padding: var(--space-2) var(--space-4);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.nav-btn:hover,
+.nav-btn.active {
+  background: var(--color-bg-600);
+  color: var(--color-text-primary);
+}
+
+.nav-btn.active {
+  color: var(--color-accent-blue);
+  position: relative;
+}
+
+.nav-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 2px;
+  background: var(--color-accent-blue);
+  border-radius: var(--radius-full);
+}
+
+.nav-btn:focus-visible {
+  outline: 2px solid var(--color-accent-blue);
+  outline-offset: 2px;
+}
+
+/* Hambúrguer */
+.navbar__hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  padding: var(--space-2);
+  flex-shrink: 0;
+  transition: border-color var(--transition-fast);
+}
+
+.navbar__hamburger:hover {
+  border-color: var(--color-accent-blue);
+}
+
+.hamburger-line {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--color-text-secondary);
+  border-radius: var(--radius-full);
+  transition: all var(--transition-normal);
+  transform-origin: center;
+}
+
+.navbar__hamburger.open .hamburger-line:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.navbar__hamburger.open .hamburger-line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.navbar__hamburger.open .hamburger-line:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ── 2. MAIN CONTENT ──────────────────────────────────────────── */
+.main-content {
+  min-height: calc(100dvh - var(--navbar-height));
+  padding: var(--space-8) var(--space-8) var(--space-16);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ── 3. SEÇÕES DE ABAS ────────────────────────────────────────── */
+.tab-section {
+  animation: fadeIn var(--transition-normal) ease-out;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.section-title {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+}
+
+.section-subtitle {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-md);
+  margin-top: var(--space-1);
+}
+
+/* ── 4. HERO (Página Inicial) ─────────────────────────────────── */
+/* ── Banner Hero na Coleção (Página Inicial) ──────────────────── */
+.collection-hero {
+  text-align: center;
+  padding: var(--space-4) var(--space-4) var(--space-6);
+  margin-bottom: var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+  position: relative;
+}
+
+.collection-hero__title {
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-2);
+}
+
+.collection-hero__subtitle {
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  max-width: 620px;
+  margin: 0 auto var(--space-6);
+  line-height: 1.6;
+}
+
+.collection-hero .hero__stats {
+  margin: 0 auto;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 70vh;
+  position: relative;
+  padding: var(--space-16) var(--space-4);
+}
+
+.hero__glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(ellipse at center, var(--color-accent-blue-glow) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero__title {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  margin-bottom: var(--space-5);
+}
+
+.hero__subtitle {
+  position: relative;
+  z-index: 1;
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  max-width: 580px;
+  line-height: 1.7;
+  margin-bottom: var(--space-8);
+}
+
+.hero__actions {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: var(--space-10);
+}
+
+.hero__actions .btn {
+  padding: var(--space-4) var(--space-8);
+  font-size: var(--font-size-md);
+}
+
+.hero__stats {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 600px;
+}
+
+.hero-stat-card {
+  background: var(--color-bg-700);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-4);
+  text-align: center;
+  transition: border-color var(--transition-normal);
+}
+
+.hero-stat-card:hover {
+  border-color: var(--color-accent-blue);
+}
+
+.hero-stat-card__value {
+  font-size: var(--font-size-3xl);
+  font-weight: 900;
+  color: var(--color-accent-blue);
+  line-height: 1;
+}
+
+.hero-stat-card__label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-1);
+  font-weight: 500;
+}
+
+/* ── 5. FILTROS ───────────────────────────────────────────────── */
+.filters-bar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  padding: var(--space-4);
+  background: var(--color-bg-700);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.filters-bar__search {
+  width: 100%;
+}
+
+.filters-bar__dropdowns {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.filters-bar__dropdowns .select {
+  flex: 1;
+  min-width: 160px;
+}
+
+/* ── 6. CARDS GRID ────────────────────────────────────────────── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+}
+
+@media (max-width: 1200px) {
+  .cards-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 900px) {
+  .cards-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .cards-grid { grid-template-columns: 1fr; }
+}
+
+/* ── 7. CARD DO PIONEIRO ──────────────────────────────────────── */
+.pioneer-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-700);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+  animation: fadeIn var(--transition-normal) ease-out forwards;
+  cursor: default;
+}
+
+.pioneer-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-border-hover);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Borda de raridade */
+.pioneer-card[data-rarity="Épico"] {
+  border-color: var(--rarity-epico);
+  box-shadow: 0 0 15px rgba(245, 200, 66, 0.1);
+}
+
+.pioneer-card[data-rarity="Épico"]:hover {
+  box-shadow: 0 0 30px rgba(245, 200, 66, 0.2), var(--shadow-lg);
+}
+
+.pioneer-card[data-rarity="Raro"] {
+  border-color: var(--rarity-raro);
+}
+
+.pioneer-card[data-rarity="Raro"]:hover {
+  box-shadow: var(--shadow-glow-blue), var(--shadow-lg);
+}
+
+/* Card recrutado */
+.pioneer-card.is-recruited {
+  border-color: var(--color-accent-gold);
+  box-shadow: 0 0 20px rgba(245, 200, 66, 0.15);
+}
+
+/* Imagem */
+.pioneer-card__image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: var(--color-bg-600);
+  overflow: hidden;
+}
+
+.pioneer-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform var(--transition-slow);
+}
+
+.pioneer-card__image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  background: radial-gradient(circle at center, var(--color-bg-500) 0%, var(--color-bg-700) 100%);
+  color: var(--color-text-secondary);
+  user-select: none;
+}
+
+.pioneer-card__avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  background: linear-gradient(135deg, var(--color-bg-600), var(--color-bg-500));
+  border: 2px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  color: var(--color-accent-blue);
+  transition: transform var(--transition-normal);
+}
+
+.pioneer-card:hover .pioneer-card__avatar {
+  transform: scale(1.08);
+}
+
+.pioneer-card[data-rarity="Épico"] .pioneer-card__avatar {
+  border-color: var(--color-accent-gold);
+  color: var(--color-accent-gold);
+  box-shadow: 0 0 15px var(--color-accent-gold-glow);
+}
+
+.pioneer-card[data-rarity="Raro"] .pioneer-card__avatar {
+  border-color: var(--color-accent-blue);
+  color: var(--color-accent-blue);
+  box-shadow: 0 0 15px var(--color-accent-blue-glow);
+}
+
+.pioneer-card__placeholder-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+/* Badge de raridade sobre a imagem */
+.pioneer-card__rarity-badge {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid;
+}
+
+.pioneer-card__rarity-badge[data-rarity="Comum"]  {
+  background: rgba(144, 149, 184, 0.2);
+  border-color: var(--rarity-comum);
+  color: var(--rarity-comum);
+}
+
+.pioneer-card__rarity-badge[data-rarity="Raro"]   {
+  background: rgba(79, 142, 247, 0.2);
+  border-color: var(--rarity-raro);
+  color: var(--rarity-raro);
+}
+
+.pioneer-card__rarity-badge[data-rarity="Épico"]  {
+  background: rgba(245, 200, 66, 0.2);
+  border-color: var(--rarity-epico);
+  color: var(--rarity-epico);
+}
+
+/* Selo de recrutado */
+.pioneer-card__seal {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  font-size: 0.6rem;
+  font-weight: 800;
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-accent-gold);
+  color: #0a0b0f;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Corpo do card */
+.pioneer-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: var(--space-4);
+  gap: var(--space-3);
+}
+
+.pioneer-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.pioneer-card__name {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.pioneer-card__specialty {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+/* Botão Favoritar */
+.btn-favorite {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+  transition: transform var(--transition-fast);
+  flex-shrink: 0;
+  line-height: 1;
+  color: var(--color-text-muted);
+}
+
+.btn-favorite:hover {
+  transform: scale(1.2);
+}
+
+.btn-favorite.is-favorited {
+  color: var(--color-accent-gold);
+  filter: drop-shadow(0 0 6px rgba(245, 200, 66, 0.6));
+}
+
+.btn-favorite:focus-visible {
+  outline: 2px solid var(--color-accent-blue);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Barra de Energia no Card */
+.pioneer-card__energy-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.pioneer-card__energy-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.pioneer-card__energy-label strong {
+  color: var(--color-text-primary);
+}
+
+/* Ações do card */
+.pioneer-card__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: auto;
+}
+
+.pioneer-card__actions-row {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.pioneer-card__actions-row .btn {
+  flex: 1;
+  font-size: var(--font-size-xs);
+  padding: var(--space-2) var(--space-3);
+}
+
+.pioneer-card__energy-actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.btn-energy {
+  flex: 1;
+  font-size: 0.65rem;
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-bg-600);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn-energy:hover {
+  border-color: var(--color-accent-blue);
+  color: var(--color-accent-blue);
+}
+
+.btn-energy--study:hover  { border-color: var(--color-accent-green);  color: var(--color-accent-green);  }
+.btn-energy--duel:hover   { border-color: var(--color-accent-purple); color: var(--color-accent-purple); }
+
+/* ── 8. ESTADO VAZIO ──────────────────────────────────────────── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-16) var(--space-8);
+  gap: var(--space-4);
+  animation: fadeIn var(--transition-normal) ease-out;
+}
+
+.empty-state__icon {
+  font-size: 3rem;
+  margin-bottom: var(--space-2);
+}
+
+.empty-state__text {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  max-width: 400px;
+}
+
+/* ── 9. MODAIS ────────────────────────────────────────────────── */
+dialog.modal {
+  display: none;
+}
+
+dialog.modal[open] {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  padding: 0;
+  border: none;
+  background: transparent;
+  max-width: 100vw;
+  max-height: 100dvh;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: scaleIn var(--transition-normal) ease-out;
+}
+
+dialog.modal::backdrop {
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.modal__content {
+  position: relative;
+  background: var(--color-bg-700);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  width: min(680px, 95vw);
+  max-height: 90dvh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg), 0 0 60px rgba(79, 142, 247, 0.1);
+  animation: scaleIn var(--transition-normal) ease-out;
+}
+
+.modal__content--form {
+  width: min(760px, 95vw);
+}
+
+.modal__close {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  width: 32px;
+  height: 32px;
+  background: var(--color-bg-600);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-sm);
+  transition: all var(--transition-fast);
+  z-index: 10;
+}
+
+.modal__close:hover {
+  background: var(--color-bg-500);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-hover);
+}
+
+.modal__title {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  margin-bottom: var(--space-6);
+  padding-right: var(--space-8);
+}
+
+/* Modal de Detalhes */
+.detail-modal__header {
+  display: flex;
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+  align-items: flex-start;
+}
+
+.detail-modal__image-wrap {
+  width: 140px;
+  height: 140px;
+  flex-shrink: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 2px solid var(--color-border);
+}
+
+.detail-modal__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.detail-modal__image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  background: var(--color-bg-600);
+}
+
+.detail-modal__info {
+  flex: 1;
+}
+
+.detail-modal__title {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  margin-bottom: var(--space-2);
+}
+
+.detail-modal__specialty {
+  font-size: var(--font-size-sm);
+  color: var(--color-accent-blue);
+  font-weight: 500;
+  margin-bottom: var(--space-3);
+}
+
+.detail-modal__tags {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-3);
+}
+
+.detail-modal__tag {
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  border: 1px solid;
+}
+
+.detail-modal__tag--personality {
+  background: var(--color-accent-purple-glow);
+  border-color: var(--color-accent-purple);
+  color: var(--color-accent-purple);
+}
+
+.detail-modal__biography {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  padding: var(--space-4);
+  background: var(--color-bg-600);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--color-accent-blue);
+  margin-bottom: var(--space-6);
+}
+
+/* Atributos de Duelo (estilo Super Trunfo) */
+.duel-attributes {
+  margin-top: var(--space-4);
+}
+
+.duel-attributes__title {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-4);
+}
+
+.duel-attributes__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.duel-attr-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.duel-attr-row__label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  width: 160px;
+  flex-shrink: 0;
+}
+
+.duel-attr-row__bar {
+  flex: 1;
+  height: 10px;
+  background: var(--color-bg-500);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.duel-attr-row__fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width var(--transition-slow);
+}
+
+.duel-attr-row__fill--impact    { background: linear-gradient(90deg, var(--color-accent-gold), #f39c12); }
+.duel-attr-row__fill--innovation { background: linear-gradient(90deg, var(--color-accent-purple), var(--color-accent-blue)); }
+.duel-attr-row__fill--resilience { background: linear-gradient(90deg, var(--color-accent-green), var(--color-accent-cyan)); }
+
+.duel-attr-row__value {
+  font-size: var(--font-size-sm);
+  font-weight: 800;
+  color: var(--color-text-primary);
+  width: 2.5rem;
+  text-align: right;
+}
+
+/* ── 10. FORMULÁRIO ───────────────────────────────────────────── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.form__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.form__label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.form__fieldset {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.form__legend {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  padding: 0 var(--space-2);
+}
+
+.form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+@media (max-width: 540px) {
+  .form__row { grid-template-columns: 1fr; }
+  .form__actions { flex-direction: column-reverse; }
+  .form__actions .btn { width: 100%; }
+}
+
+/* ── 11. DASHBOARD ────────────────────────────────────────────── */
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-10);
+}
+
+.stat-card {
+  background: var(--color-bg-700);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 3px;
+}
+
+.stat-card--total::before    { background: linear-gradient(90deg, var(--color-accent-blue), var(--color-accent-purple)); }
+.stat-card--available::before { background: linear-gradient(90deg, var(--color-accent-green), var(--color-accent-cyan)); }
+.stat-card--recruited::before { background: linear-gradient(90deg, var(--color-accent-gold), #f39c12); }
+.stat-card--favorited::before { background: linear-gradient(90deg, #f75d5d, #f39c12); }
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-border-hover);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-card__icon {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.stat-card__value {
+  font-size: var(--font-size-4xl);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--color-text-primary);
+}
+
+.stat-card__label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.dashboard-subtitle {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  margin-bottom: var(--space-5);
+  color: var(--color-text-secondary);
+}
+
+.dashboard-specialty,
+.dashboard-rarity {
+  margin-bottom: var(--space-10);
+}
+
+/* Lista de especialidades */
+.specialty-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.specialty-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.specialty-row__label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  width: 260px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.specialty-row__bar-wrap {
+  flex: 1;
+  height: 8px;
+  background: var(--color-bg-500);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.specialty-row__bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, var(--color-accent-blue), var(--color-accent-purple));
+  transition: width var(--transition-slow);
+}
+
+.specialty-row__count {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-accent-blue);
+  width: 2rem;
+  text-align: right;
+}
+
+/* Barras de raridade */
+.rarity-bars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.rarity-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.rarity-row__label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  width: 80px;
+  flex-shrink: 0;
+}
+
+.rarity-row__label--Comum  { color: var(--rarity-comum); }
+.rarity-row__label--Raro   { color: var(--rarity-raro); }
+.rarity-row__label--Épico  { color: var(--rarity-epico); }
+
+.rarity-row__bar-wrap {
+  flex: 1;
+  height: 10px;
+  background: var(--color-bg-500);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.rarity-row__bar-fill--Comum { background: var(--rarity-comum); }
+.rarity-row__bar-fill--Raro  { background: var(--rarity-raro); }
+.rarity-row__bar-fill--Épico { background: var(--rarity-epico); }
+
+.rarity-row__bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width var(--transition-slow);
+}
+
+.rarity-row__count {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  width: 2rem;
+  text-align: right;
+  color: var(--color-text-primary);
+}
+
+/* ── 12. MODO DUELO ───────────────────────────────────────────── */
+.duel-arena {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--space-6);
+  align-items: start;
+  margin-bottom: var(--space-8);
+}
+
+.duel-slot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.duel-slot__title {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.select--duel {
+  width: 100%;
+}
+
+.duel-vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-3xl);
+  font-weight: 900;
+  color: var(--color-accent-purple);
+  text-shadow: 0 0 20px var(--color-accent-purple-glow);
+  letter-spacing: -0.04em;
+  margin-top: 2.5rem;
+}
+
+/* Preview de duelo */
+.duel-card-preview {
+  background: var(--color-bg-700);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  transition: all var(--transition-normal);
+}
+
+.duel-preview__name {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  text-align: center;
+}
+
+.duel-preview__specialty {
+  font-size: var(--font-size-xs);
+  color: var(--color-accent-blue);
+  text-align: center;
+  font-weight: 500;
+}
+
+.duel-preview__attrs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.duel-preview__attr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.duel-preview__attr strong {
+  color: var(--color-text-primary);
+  font-weight: 700;
+  font-size: var(--font-size-sm);
+}
+
+.duel-attribute-select {
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.duel-attribute-select__label {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-4);
+}
+
+.duel-attribute-select__buttons {
+  display: flex;
+  gap: var(--space-4);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Resultado do Duelo */
+.duel-result {
+  margin-top: var(--space-6);
+  padding: var(--space-8);
+  background: var(--color-bg-700);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  text-align: center;
+  animation: scaleIn var(--transition-normal) ease-out;
+}
+
+.duel-result__title {
+  font-size: var(--font-size-2xl);
+  font-weight: 900;
+  margin-bottom: var(--space-3);
+}
+
+.duel-result__title--win  { color: var(--color-accent-gold); }
+.duel-result__title--draw { color: var(--color-accent-blue); }
+
+.duel-result__detail {
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+}
+
+.duel-result__scores {
+  display: flex;
+  gap: var(--space-8);
+  justify-content: center;
+  align-items: center;
+  margin: var(--space-5) 0;
+}
+
+.duel-result__score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.duel-result__score-name {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.duel-result__score-value {
+  font-size: var(--font-size-4xl);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+
+.duel-result__score-value--winner { color: var(--color-accent-gold); }
+.duel-result__score-value--loser  { color: var(--color-text-muted); }
+.duel-result__score-value--draw   { color: var(--color-accent-blue); }
+
+.duel-result__attr-name {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-5);
+}
+
+.btn-duel-again {
+  margin-top: var(--space-4);
+}
+
+/* ── 13. RESPONSIVIDADE MOBILE ────────────────────────────────── */
+@media (max-width: 768px) {
+
+  .navbar {
+    padding: 0 var(--space-4);
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    height: auto;
+    min-height: var(--navbar-height);
+    padding-top: var(--space-3);
+    padding-bottom: var(--space-3);
+  }
+
+  .navbar__recruits { display: none; }
+
+  .navbar__nav {
+    display: none;
+    width: 100%;
+    padding: var(--space-3) 0;
+    border-top: 1px solid var(--color-border);
+    order: 3;
+  }
+
+  .navbar__nav.is-open { display: block; }
+
+  .navbar__list {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-1);
+  }
+
+  .nav-btn {
+    width: 100%;
+    text-align: left;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+  }
+
+  .nav-btn.active::after { display: none; }
+
+  .navbar__hamburger { display: flex; margin-left: auto; }
+
+  .main-content {
+    padding: var(--space-5) var(--space-4) var(--space-16);
+  }
+
+  .hero { min-height: 60vh; padding: var(--space-10) var(--space-4); }
+  .hero__glow { width: 300px; height: 300px; }
+
+  .filters-bar__dropdowns { flex-direction: column; }
+  .filters-bar__dropdowns .select { min-width: 100%; }
+
+  .duel-arena {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .duel-vs { margin-top: 0; font-size: var(--font-size-2xl); }
+
+  .detail-modal__header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .duel-attr-row__label { width: 120px; font-size: var(--font-size-xs); }
+
+  .duel-attribute-select__buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .specialty-row__label { width: 140px; font-size: var(--font-size-xs); }
+
+  .modal__content { padding: var(--space-6) var(--space-4); }
+
+  .duel-result__scores { gap: var(--space-5); }
+  .duel-result__score-value { font-size: var(--font-size-3xl); }
+}
