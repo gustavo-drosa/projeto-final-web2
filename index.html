@@ -112,40 +112,84 @@
       </div>
     </section>
 
-    <!-- MODO DUELO -->
+    <!-- MODO DUELO (SUPER TRUNFO) -->
     <section class="tab-section hidden" id="tab-duel" data-section="duel">
-      <div class="section-header">
-        <h2 class="section-title">⚔️ Modo Duelo</h2>
-        <p class="section-subtitle">Selecione dois pioneiros e escolha um atributo para disputar!</p>
-      </div>
-      <div class="duel-arena" id="duel-arena">
-        <div class="duel-slot" id="duel-slot-a">
-          <h3 class="duel-slot__title">Pioneiro A</h3>
-          <label for="duel-select-a" class="sr-only">Selecionar Pioneiro A</label>
-          <select id="duel-select-a" class="select select--duel">
-            <option value="">— Escolha um pioneiro —</option>
-          </select>
-          <div class="duel-card-preview" id="duel-preview-a"></div>
+
+      <!-- 1. LOBBY DE PREPARAÇÃO -->
+      <div id="duel-lobby" class="duel-lobby">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">⚔️ Modo Duelo — Super Trunfo</h2>
+            <p class="section-subtitle">Dispute uma Melhor de 7 contra o adversário. Quem vencer 4 rodadas primeiro é o grande campeão!</p>
+          </div>
         </div>
-        <div class="duel-vs" aria-hidden="true">VS</div>
-        <div class="duel-slot" id="duel-slot-b">
-          <h3 class="duel-slot__title">Pioneiro B</h3>
-          <label for="duel-select-b" class="sr-only">Selecionar Pioneiro B</label>
-          <select id="duel-select-b" class="select select--duel">
-            <option value="">— Escolha um pioneiro —</option>
-          </select>
-          <div class="duel-card-preview" id="duel-preview-b"></div>
+
+        <!-- Banner de Status da Equipe -->
+        <div class="duel-status-card" id="duel-status-card"></div>
+
+        <!-- Visualização simples das cartas recrutadas -->
+        <div class="duel-lobby__team">
+          <div class="duel-lobby__team-header">
+            <h3 class="duel-lobby__subtitle">Sua Equipe de Batalha (<span id="duel-team-count">0</span>/7)</h3>
+            <p class="duel-lobby__note">Estas 7 cartas entrarão em campo na ordem sorteada para a disputa.</p>
+          </div>
+          <div class="duel-lobby__cards-grid" id="duel-lobby-cards"></div>
         </div>
-      </div>
-      <div class="duel-attribute-select hidden" id="duel-attr-section">
-        <p class="duel-attribute-select__label">Escolha o atributo para o duelo:</p>
-        <div class="duel-attribute-select__buttons">
-          <button class="btn btn--attr" data-attr="impactoHistorico">🏆 Impacto Histórico</button>
-          <button class="btn btn--attr" data-attr="poderInovacao">💡 Poder de Inovação</button>
-          <button class="btn btn--attr" data-attr="resiliencia">🛡️ Resiliência</button>
+
+        <!-- Botão Iniciar Duelo -->
+        <div class="duel-lobby__actions">
+          <button class="btn btn--primary btn--lg" id="btn-start-duel" disabled>
+            ⚔️ Iniciar Duelo (Melhor de 7)
+          </button>
         </div>
       </div>
-      <div class="duel-result hidden" id="duel-result" role="alert" aria-live="assertive"></div>
+
+      <!-- 2. ARENA DE BATALHA -->
+      <div id="duel-battle-arena" class="duel-battle-arena hidden">
+        <!-- Placar e Indicadores -->
+        <div class="duel-header-panel">
+          <div class="duel-round-badge" id="duel-round-badge">Rodada 1 de 7</div>
+          <div class="duel-scoreboard">
+            <div class="scoreboard-side scoreboard-side--user">
+              <span class="scoreboard-side__name">Você</span>
+              <span class="scoreboard-side__score" id="duel-score-user">0</span>
+            </div>
+            <div class="scoreboard-vs">
+              <span class="scoreboard-vs__text">VS</span>
+              <span class="scoreboard-vs__target">Melhor de 7</span>
+            </div>
+            <div class="scoreboard-side scoreboard-side--bot">
+              <span class="scoreboard-side__score" id="duel-score-bot">0</span>
+              <span class="scoreboard-side__name">Adversário</span>
+            </div>
+          </div>
+          <div class="duel-score-pips" id="duel-score-pips" aria-label="Progresso de vitórias"></div>
+        </div>
+
+        <!-- Banner de Turno / Status -->
+        <div class="duel-turn-banner" id="duel-turn-banner" role="status" aria-live="polite"></div>
+
+        <!-- Mesa de Confronto: Carta do Usuário vs Carta do Adversário -->
+        <div class="duel-versus-container" id="duel-versus-container">
+          <!-- Carta do Usuário (Esquerda) -->
+          <div class="duel-card-wrapper duel-card-wrapper--user" id="duel-card-user"></div>
+
+          <!-- Centro: Espadas e Mensagem de Resolução -->
+          <div class="duel-center-stage" id="duel-center-stage">
+            <div class="duel-swords-icon" id="duel-swords-icon" aria-hidden="true">⚔️</div>
+            <div class="duel-round-message hidden" id="duel-round-message" role="alert"></div>
+          </div>
+
+          <!-- Carta do Adversário (Direita - Fog of War) -->
+          <div class="duel-card-wrapper duel-card-wrapper--bot" id="duel-card-bot"></div>
+        </div>
+      </div>
+
+      <!-- 3. TELA DE FIM DE JOGO -->
+      <div id="duel-gameover" class="duel-gameover hidden">
+        <div class="duel-gameover__card" id="duel-gameover-card"></div>
+      </div>
+
     </section>
 
     <!-- PAINEL -->
@@ -258,6 +302,7 @@
   <script src="js/data.js"></script>
   <script src="js/state.js"></script>
   <script src="js/ui.js"></script>
+  <script src="js/duel.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

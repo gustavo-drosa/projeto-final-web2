@@ -18,11 +18,7 @@ const FilterState = {
   especialidade: ''
 };
 
-// Estado temporário do Duelo
-const DuelState = {
-  pionA: null,
-  pionB: null
-};
+
 
 // ══════════════════════════════════════════════════════════════
 // 2. FUNÇÕES DE ATUALIZAÇÃO GLOBAL DA UI
@@ -77,7 +73,7 @@ function refreshCurrentTab() {
       break;
 
     case 'duel':
-      populateDuelSelects(getAllPioneiros());
+      DuelManager.init();
       break;
 
     case 'dashboard':
@@ -262,8 +258,7 @@ function renderTabContent(tabName) {
       break;
 
     case 'duel':
-      populateDuelSelects(getAllPioneiros());
-      resetDuelUI();
+      DuelManager.init();
       break;
 
     case 'dashboard':
@@ -394,46 +389,17 @@ function registerEventListeners() {
     clearEmptyBtn.addEventListener('click', clearFilters);
   }
 
-  // ── Modo Duelo — Seleção de Pioneiros ────────────────────
-  $id('duel-select-a')?.addEventListener('change', (e) => {
-    DuelState.pionA = getPioneiroById(Number(e.target.value)) || null;
-    renderDuelPreview(DuelState.pionA, 'a');
-    checkAndShowDuelAttrSection(DuelState.pionA, DuelState.pionB);
-    // Oculta resultado anterior
-    $id('duel-result')?.classList.add('hidden');
+  // ── Modo Duelo (Super Trunfo) ─────────────────────────────
+  $id('btn-start-duel')?.addEventListener('click', () => {
+    DuelManager.startDuel();
   });
 
-  $id('duel-select-b')?.addEventListener('change', (e) => {
-    DuelState.pionB = getPioneiroById(Number(e.target.value)) || null;
-    renderDuelPreview(DuelState.pionB, 'b');
-    checkAndShowDuelAttrSection(DuelState.pionA, DuelState.pionB);
-    $id('duel-result')?.classList.add('hidden');
-  });
-
-  // ── Modo Duelo — Seleção de Atributo ─────────────────────
-  $id('duel-attr-section')?.addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-attr]');
-    if (!btn) return;
-
-    const attr = btn.dataset.attr;
-
-    if (!DuelState.pionA || !DuelState.pionB) {
-      showToast('Selecione dois pioneiros primeiro!', 'warning');
-      return;
-    }
-
-    if (DuelState.pionA.id === DuelState.pionB.id) {
-      showToast('Escolha dois pioneiros diferentes!', 'warning');
-      return;
-    }
-
-    renderDuelResult(DuelState.pionA, DuelState.pionB, attr);
-  });
-
-  // ── Resultado do Duelo — Novo Duelo ──────────────────────
-  $id('duel-result')?.addEventListener('click', (e) => {
-    if (e.target.id === 'duel-again-btn' || e.target.closest('#duel-again-btn')) {
-      resetDuelUI();
+  // Delegação de cliques nos atributos de duelo da carta do usuário
+  $id('duel-battle-arena')?.addEventListener('click', (e) => {
+    const btn = e.target.closest('.duel-attr-btn[data-attr]');
+    if (btn && btn.classList.contains('is-interactive')) {
+      const attr = btn.dataset.attr;
+      DuelManager.handleUserClick(attr);
     }
   });
 }
@@ -536,9 +502,8 @@ function init() {
     ? '💾 Estado restaurado do localStorage.'
     : '📦 Dados padrão carregados.');
 
-  // 2. Preenche dropdowns de filtro e selects de duelo
+  // 2. Preenche dropdowns de filtro
   populateFilterDropdowns(getAllPioneiros());
-  populateDuelSelects(getAllPioneiros());
 
   // 3. Registra todos os event listeners
   registerEventListeners();
